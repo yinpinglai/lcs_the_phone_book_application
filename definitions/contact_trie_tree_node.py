@@ -8,7 +8,7 @@ class ContactTrieTreeNode:
 
   def __init__(self, character) -> None:
     """
-      Initialize the contact trie tree object by constructor
+      Initialize the contact trie tree object by the constructor
     """
     self.character = character
     self.has_ended = False

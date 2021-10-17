@@ -5,7 +5,7 @@ class Contact:
 
   def __init__(self, name, phone) -> None:
     """
-      Initialize the contact object by constructor
+      Initialize the contact object by the constructor
     """
     self.name = name
     self.phone = phone

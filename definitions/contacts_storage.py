@@ -11,7 +11,7 @@ class ContactsStorage(object):
 
   def __init__(self) -> None:
     '''
-      Initializes the contacts storage object by constructor
+      Initializes the contacts storage object by the constructor
     '''
     super().__init__()
     self.storage_filename = 'contacts.json'

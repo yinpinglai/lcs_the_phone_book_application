@@ -7,7 +7,7 @@ class ContactTrieTree(object):
 
   def __init__(self) -> None:
     """
-      Initializes the contact trie tree object by constructor
+      Initializes the contact trie tree object by the constructor method
     """
     self.root = ContactTrieTreeNode('')
 
@@ -56,7 +56,7 @@ class ContactTrieTree(object):
 
     def _remove_contact_trie_node(node, name, phone, idx) -> bool:
       '''
-        Removes the contact trie tree node object form the contact trie tree
+        Removes the contact trie tree node object from the contact trie tree
 
         Parameters:
           - children: The children nodes of the current trie tree node object
@@ -177,7 +177,7 @@ class ContactTrieTree(object):
 
       Parameters:
         - contacts: A list of contacts
-        - order: (optional) The order is used for determing the descending order while sorting the list. By default is 1. 1 equals ascending order. -1 equals deascending order.
+        - order: (optional) The order is used for determining the descending order while sorting the list. By default is 1. 1 equals ascending order. -1 equals descending order.
 
       Returns:
         - sorted_results: A sorted list of contacts
@@ -187,7 +187,7 @@ class ContactTrieTree(object):
 
     def _sort_by_name(contact) -> str:
       '''
-        Retrieves the sorting key of contact object
+        Retrieves the sorting key of the contact object
       '''
       return contact.name
     

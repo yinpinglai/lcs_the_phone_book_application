@@ -7,8 +7,14 @@ from definitions.contacts_storage import ContactsStorage
 from definitions.contact_trie_tree import ContactTrieTree
 
 class PhoneBookApplication():
+  '''
+    The Phone Book Application object structure
+  '''
 
   def __init__(self) -> None:
+    '''
+      Initializes the phone book application by the constructor method
+    '''
     self.root = Tk()
     self.contact_trie_tree = ContactTrieTree()
     self.contacts_tree_view = ttk.Treeview(self.root)

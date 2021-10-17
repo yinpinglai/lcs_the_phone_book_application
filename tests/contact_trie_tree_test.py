@@ -19,6 +19,9 @@ class ContactTrieTreeTestCase(unittest.TestCase):
     self.assertEqual(len(contact_trie_tree.root.children), 26)
     
   def test_inserting_one_contact_object(self) -> None:
+    '''
+      Refers to the test case FC-001 of the design document.
+    '''
     contact = Contact(name='Jack', phone='6741-0374')
     contact_trie_tree = ContactTrieTree()
     insertion_result = contact_trie_tree.insert_contact(contact=contact)
@@ -216,6 +219,9 @@ class ContactTrieTreeTestCase(unittest.TestCase):
     self.assertEqual(contact_trie_tree_serialized_json, expected_result)
 
   def test_deleting_one_contact_object(self) -> None:
+    '''
+      Refers to the test case FC-002 of the design document.
+    '''
     contact = Contact(name='Jack', phone='6741-0374')
     contact_trie_tree = ContactTrieTree()
     insertion_result = contact_trie_tree.insert_contact(contact=contact)
@@ -412,24 +418,35 @@ class ContactTrieTreeTestCase(unittest.TestCase):
     self.assertEqual(all_contacts_serialized_json, expected_results)
 
   def test_searching_contacts(self) -> None:
+    '''
+      Refers to the test case FC-003 of the design document.
+    '''
     contact_trie_tree = ContactTrieTree()
     contact = Contact(name='Jack', phone='6741-0374')
     insertion_result = contact_trie_tree.insert_contact(contact=contact)
     self.assertEqual(insertion_result, True)
 
+    '''
+      ID No: 3.1.3.1 - Search an non-existing contact in the tree
+    '''
     search_results = contact_trie_tree.search_contacts(keyword='Jay')
     expected_results = []
     self.assertEqual(search_results, expected_results)
 
+    '''
+      ID No: 3.1.3.2 - Search an existing contact in the tree
+    '''
     search_results = contact_trie_tree.search_contacts(keyword='Ja')
     search_results_serialized_json = json.dumps(search_results, default=ComplexJSONEncoder)
-
     expected_results = json.dumps([
       { 'name': 'Jack', 'phone': '6741-0374' }
     ])
     self.assertEqual(search_results_serialized_json, expected_results)
   
   def test_sorting_contacts(self) -> None:
+    '''
+      Refers to the test case FC-004 of the design document.
+    '''
     contact_trie_tree = ContactTrieTree()
     contact = Contact(name='Jay', phone='9999-1111')
     insertion_result = contact_trie_tree.insert_contact(contact=contact)
