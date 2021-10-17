@@ -55,7 +55,7 @@ python3 ./tests/*_test.py -v
 
 ![Screenshot 2021-10-17 at 3.15.07 PM.png](./tmp/images/Screenshot_2021-10-17_at_3.15.07_PM.png)
 
-Figure 4.0.1 The class diagram of the PBA
+*Figure 4.0.1 - The class diagram of the PBA*
 
 Figure 4.0.1 illustrates the relationship between each class in the PBA. There have three core classes in the PBA. The Contact Trie class is the definition of the Contact Trie Tree. It carries out operations of managing leaf nodes, searching leaf nodes, and sorting leaf nodes in its tree structure. The Contact Node class is the definition of the trie tree node. It contains the character and contact list in its state. The Contact class is the definition of the contact. It contains the contact person's information, such as name and phone number. 
 
@@ -85,6 +85,7 @@ class Contact:
       )
     '''
 ```
+*Figure 4.1.1 - The code snippet of the concrete implementation of the Contact class*
 
 During the creation of the contact object, the PBA needs to provide name and phone attributes for initialization. The contact class stores those information in its state during executing the __init__ method. For the full code of the contact definition, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/contact.py).
 
@@ -121,6 +122,7 @@ class ContactTrieTreeNode:
       )
     '''
 ```
+*Figure 4.2.1 - The code snippet of the concrete implementation of the Contact Trie Tree Node class*
 
 During the initialization of the Contact Trie Tree Node object, the PBA needs to provide the character information to it. It takes the character and stores it inside its state. It also creates other attributes with default values during the initialization. The contact list holding all related contact records. The full code of the definition of the Contact Trie Tree Node, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/contact_trie_tree_node.py).
 
@@ -143,6 +145,7 @@ class ContactTrieTree(object):
     for i in range(97, 123):
       self.root.children[chr(i)] = ContactTrieTreeNode(chr(i))
 ```
+*Figure 4.3.1 - The code snippet of the concrete implementation of the Contact trie Tree class*
 
 During the initialization, it does not need any parameter to pass in. It creates a root node with an empty character and stores it in its state. After the creation of the root node. It creates the children's leaf nodes from a-z alphabets. The child leaf node has not contained any information yet. It just builds the tree structure to prevent underlying operation problems. The full code of the definition of the Contact Trie Tree, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/contact_trie_tree.py).
 
@@ -168,6 +171,7 @@ class ContactsStorage(object):
     self.storage_filename = 'contacts.json'
     self.storage_filepath = os.path.join(PROJECT_PATH, 'tmp', self.storage_filename)
 ```
+*Figure 4.4.1 - The code snippet of the concrete implementation of the Contacts Storage class*
 
 During the initialization, it fetches the temporary JSON file path by the os.path.join method. It stores the file path into the storage_filepath state. The contact storage object carries out the read/write operations for all contact records to the temporary JSON file. The full code of the definition of the Contacts Storage, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/contacts_storage.py).
 
@@ -177,7 +181,7 @@ During the initialization, it fetches the temporary JSON file path by the os.pat
 
 ![Screenshot 2021-10-17 at 2.03.34 PM.png](./tmp/images/Screenshot_2021-10-17_at_2.03.34_PM.png)
 
-Figure 4.1.1 The screenshot after starting up the PBA
+*Figure 5.1.1 The screenshot after starting up the PBA*
 
 By executing the command of starting the main application of the PBA in figure 3.2.1. Figure 4.1.1 reveals the main window of the PBA. This GUI is built by the [Tkinter](https://docs.python.org/3/library/tkinter.html) module of the Python programming language. It has an input of searching contacts, a button for creating a new contact record, a table showing all contact records, and a button for deleting selected contact records on the GUI window. It enables users to perform operations on their phone book through the GUI window. The GUI application manages the contact Trie Tree and contacts records in the JSON file storage.
 
@@ -191,6 +195,7 @@ class PhoneBookApplication():
 		self.root.gemetry('560x480')
 		self.root.mainloop()
 ```
+*Figure 5.1.2 - The code snippet of initializing the GUI window*
 
 The Tkinter module provides a convenient way to create a GUI window. It is a built-in module of the Python programming language. As a result, we do not need to install any external packages into our solution. The full code of building the GUI window of PBA, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/application.py). 
 
@@ -215,8 +220,9 @@ class PhoneBookApplication():
       self.contact_trie_tree.insert_contact(contact)
     self.contacts = retrieved_contacts
 ```
+*Figure 5.2.1 - The code snippet of initializing the internal state of the PBA*
 
-Figure 4.2.1 illustrates that the PBA loads all contact records from the temporary JSON file during the first time initialization. Since the PBA provides persistence of the contact records. As a result, users do not have to insert all the contact records after restarted the application every time. The PBA retrieves all contact records from the JSON file automatically. The full code of retrieving contact records during initialization, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/application.py#L25).
+Figure 5.2.1 illustrates that the PBA loads all contact records from the temporary JSON file during the first time initialization. Since the PBA provides persistence of the contact records. As a result, users do not have to insert all the contact records after restarted the application every time. The PBA retrieves all contact records from the JSON file automatically. The full code of retrieving contact records during initialization, please see [here](https://github.com/yinpinglai/lcs_the_phone_book_application/blob/master/definitions/application.py#L25).
 
 ### 5.3 Search contact records <a name="the-functionalities-of-the-pba-retrieve-contact-records-from-the-temporary-json-file"></a>
 
@@ -266,6 +272,7 @@ def search_contacts(self, keyword) -> list:
     results = _find_nodes(current_node, keyword[:-1])
     return results
 ```
+*Figure 5.3.1 - The code snippet of the concrete implementation of the search contact records function*
 
 Figure 5.3.1 illustrates the concrete of searching contacts by given keywords implementation. We followed the design of the searching contacts flow chart which is discussed in section 2.2.4 to implement it. The search contacts function takes the keyword as a parameter. It splits the keyword into every single character. It loops through each character to find related leaf nodes. The search function contains a sub-function called "_find_nodes". The sub-function finds all children recursively until it reaches the deepest leaf node.  
 
@@ -299,6 +306,7 @@ def insert_contact(self, contact) -> bool:
     current_node.contact_list.append(contact)
     return True
 ```
+*Figure 5.4.1 - The code snippet of the concrete implementation of the insert a new contact record function*
 
 Figure 5.4.1 illustrates the concrete implementation of inserting a new contact into the Contact Trie Tree. We followed the design of the contact insertion which we discussed in section 2.2.2 to implement. The insertion function takes a contact object as a parameter. It loops through each character of the name of the contact object to create a new leaf node into the Trie Tree when it does not exist. When it reaches the end of a leaf node, it appends the new contact into the contact list.
 
@@ -354,6 +362,7 @@ def delete_contact(self, contact) -> bool:
     idx = 0
     return _remove_contact_trie_node(current_node, name, phone, idx)
 ```
+*Figure 5.5.1 - The code snippet of the concrete implementation of the delete an existing contact record function*
 
 Figure 5.5.1 illustrates the concrete implementation of deleting an existing contact from the Contact Trie Tree. We followed the design of the contact deletion which we designed in section 2.2.3. The deletion function takes a contact as a parameter. It loops through each character of the name of the contact to remove the contact from the contact list. In case there have no more children in the leaf node, it purges the leaf node from the Contact Trie Tree as well.
 
@@ -386,5 +395,6 @@ def sort_contacts(self, contacts, order=1) -> list:
       contacts.sort(key=_sort_by_name, reverse=True)
     return contacts
 ```
+*Figure 5.6.1 - The code snippet of the concrete implementation of the sort contact records function*
 
 Figure 5.6.1 illustrates the concrete implementation of the contact records. It takes contacts and order as parameters. It sorts the contact records by the name of each contact order in ascending or descending order. It uses the built-in sort function of a list object to carry out the sorting of contact records.
