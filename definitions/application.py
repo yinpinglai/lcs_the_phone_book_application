@@ -3,6 +3,7 @@ from tkinter import simpledialog, ttk
 from tkinter.messagebox import askyesno, showinfo, showwarning, showerror
 
 from definitions.contact import Contact
+from definitions.contacts_storage import ContactsStorage
 from definitions.contact_trie_tree import ContactTrieTree
 
 class PhoneBookApplication():
@@ -11,6 +12,7 @@ class PhoneBookApplication():
     self.root = Tk()
     self.contact_trie_tree = ContactTrieTree()
     self.contacts_tree_view = ttk.Treeview(self.root)
+    self.contacts_storage = ContactsStorage()
     self.init_state()
     self.configure_root_window()
     self.build_layout()
@@ -18,18 +20,12 @@ class PhoneBookApplication():
 
   def init_state(self) -> None:
     '''
-      Initializes the internal state
+      Initializes the internal state, retrieve and reload serialized contacts from the JSON file
     '''
-    demo_contact_1 = Contact('Jack', '3341-3556')
-    demo_contact_2 = Contact('Jay', '5534-2345')
-    demo_contact_3 = Contact('Alice', '4235-4560')
-    demo_contact_4 = Contact('Peter', '8541-3124')
-    demo_contact_5 = Contact('Zoey', '8953-1234')
-    self.contact_trie_tree.insert_contact(demo_contact_1)
-    self.contact_trie_tree.insert_contact(demo_contact_2)
-    self.contact_trie_tree.insert_contact(demo_contact_3)
-    self.contact_trie_tree.insert_contact(demo_contact_4)
-    self.contact_trie_tree.insert_contact(demo_contact_5)
+    retrieved_contacts = self.contacts_storage.retrieve_contacts_from_json()
+    for contact in retrieved_contacts:
+      self.contact_trie_tree.insert_contact(contact)
+    self.contacts = retrieved_contacts
     self.search_term = StringVar()
     self.previous_search_term = ''
     self.sorting_order = 1
@@ -43,6 +39,14 @@ class PhoneBookApplication():
     '''
     self.root.title('LCS - The Phone Book Application')
     self.root.geometry('560x480')
+
+  def export_all_contacts_to_external_storage(self) -> None:
+    '''
+      Exports all contact objects to the external JSON file.
+    '''
+    if self.contacts != None:
+      self.contacts = self.contact_trie_tree.sort_contacts(self.contacts)
+      self.contacts_storage.write_contacts_to_json(self.contacts)
 
   def render_tree_view(self) -> None:
     '''
@@ -77,6 +81,8 @@ class PhoneBookApplication():
       has_inserted = self.contact_trie_tree.insert_contact(new_contact)
       if has_inserted:
         self.render_tree_view()
+        self.contacts.append(new_contact)
+        self.export_all_contacts_to_external_storage()
         showinfo(title='Success', message='{}\'s contact has been inserted successfully'.format(name))
       else:
         showerror(title='Failed', message='Unable to insert a new contact record into the application')
@@ -148,6 +154,9 @@ class PhoneBookApplication():
             contact = Contact(name, phone)
             try:
               self.contact_trie_tree.delete_contact(contact)
+              if contact in self.contacts:
+                self.contacts.remove(contact)
+                self.export_all_contacts_to_external_storage()
               self.render_tree_view()
               showinfo(title='Success', message='{}\'s contact has been deleted'.format(contact.name))
             except Exception as e:
